@@ -14,7 +14,8 @@ import { DOOR_CODE } from "../types/codes";
 import { useRouter } from "next/navigation";
 
 export default function Hallway() {
-  const { state, addItem, unlockSafe, openDoor } = useGame();
+  const { state, addItem, unlockSafe, openDoor, startTimer, endsAt } =
+    useGame();
   const [keypadOpen, setKeypadOpen] = useState(false);
   const [viewing, setViewing] = useState<Item | null>(null);
   const [equipped, setEquipped] = useState<Item | null>(null);
@@ -30,6 +31,7 @@ export default function Hallway() {
   }
   const router = useRouter();
   const [doorKeypadOpen, setDoorKeypadOpen] = useState(false);
+
   return (
     <>
       <Room dim={!lit} flashlight={flashlightOn}>
@@ -101,6 +103,20 @@ export default function Hallway() {
             }}
           />
         </Modal>
+      )}
+      {endsAt === null && (
+        <div
+          className="br-intro"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Introduction"
+        >
+          <p>You warped to a wall and got stuck in a liminal space.</p>
+          <p>You must solve the puzzles within to escape.</p>
+          <button autoFocus onClick={startTimer}>
+            Begin
+          </button>
+        </div>
       )}
     </>
   );
