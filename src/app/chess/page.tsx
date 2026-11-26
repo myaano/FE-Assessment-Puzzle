@@ -10,7 +10,7 @@ import ChessPuzzle from "../reusable_components/ChessPuzzle";
 import { PUZZLE_FEN } from "../types/puzzles";
 
 export default function Chess() {
-  const { state } = useGame();
+  const { state, solveChess } = useGame();
   const router = useRouter();
   const [boardOpen, setBoardOpen] = useState(false);
   const [escaped, setEscaped] = useState(false);
@@ -37,7 +37,6 @@ export default function Chess() {
               onClick={() => setBoardOpen(true)}
             />
           </div>
-          <p className="br-plaque">White to move. Mate in one.</p>
         </div>
       </Room>
 
@@ -47,6 +46,7 @@ export default function Chess() {
             onSolved={() => {
               setBoardOpen(false);
               setEscaped(true);
+              solveChess();
             }}
           />
         </Modal>
@@ -55,9 +55,7 @@ export default function Chess() {
       {escaped && (
         <div className="br-escaped">
           <h1>You escaped.</h1>
-          <p>
-            The hum fades. Somewhere behind you, the lights keep flickering.
-          </p>
+          <p>You escaped and warped into the real world.</p>
         </div>
       )}
     </>
